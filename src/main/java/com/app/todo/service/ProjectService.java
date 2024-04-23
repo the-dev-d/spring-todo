@@ -3,6 +3,7 @@ package com.app.todo.service;
 
 import com.app.todo.dto.ProjectDto;
 import com.app.todo.model.Project;
+import com.app.todo.model.Todo;
 import com.app.todo.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,12 @@ public class ProjectService {
     public ProjectDto getByProjectId(Long id) {
 
         Optional<Project> project = projectRepository.findById(id);
+
         return project
-                .map(ProjectDto::new)
+                .map(p -> {
+                    List<Todo> todos = p.getTodos();
+                    return new ProjectDto(p);
+                })
                 .orElse(null);
     }
 

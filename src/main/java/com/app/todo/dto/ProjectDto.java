@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -18,6 +19,10 @@ public class ProjectDto {
         this.id = project.getId();
         this.title = project.getTitle();
         this.createdAt = project.getCreatedAt();
+        this.todos = project.getTodos()
+                .stream()
+                .map(TodoDto::new)
+                .toList();
     }
 
     Long id;
@@ -25,4 +30,6 @@ public class ProjectDto {
     String title;
 
     Date createdAt;
+
+    List<TodoDto> todos;
 }
